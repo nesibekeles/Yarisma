@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Düğün.com Loyalty & Engagement Sistemi - Proje Sayfası</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F8F9FA; }
+        .gradient-text { background: linear-gradient(90deg, #db0962, #0173ea); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .flow-card { border-left: 4px solid #db0962; transition: all 0.3s ease; }
+        .flow-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .tab-button { transition: all 0.3s ease; }
+        .tab-button.active { color: #db0962; border-color: #db0962; }
+        
+        /* Modal for Image Popup */
+        .modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0;
+            width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8);
+            align-items: center; justify-content: center;
+        }
+        .modal-content {
+            margin: auto; display: block; max-width: 90%; max-height: 90%;
+        }
+        .modal-close {
+            position: absolute; top: 20px; right: 35px; color: #fff;
+            font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer;
+        }
+        .thumbnail { cursor: pointer; transition: transform 0.2s; }
+        .thumbnail:hover { transform: scale(1.05); }
+
+        /* Accordion for SSS */
+        details > summary {
+            list-style: none; cursor: pointer;
+            padding: 1rem; background-color: #f9fafb;
+            border-radius: 0.5rem; border: 1px solid #e5e7eb;
+            font-weight: 600;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        details > summary::after {
+            content: '+'; font-size: 1.5rem; font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+        details[open] > summary::after {
+            transform: rotate(45deg);
+        }
+        details > div {
+            padding: 1rem; border: 1px solid #e5e7eb; border-top: 0;
+            border-bottom-left-radius: 0.5rem; border-bottom-right-radius: 0.5rem;
+        }
+.icon {
+    display: inline-block;
+    width: 1em; /* Yazı boyutuyla orantılı genişlik */
+    height: 1em; /* Yazı boyutuyla orantılı yükseklik */
+    background-color: #db0962; /* İkon Rengi */
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+}
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center my-8 md:mb-12">
+            <img src="https://dugun.com/assets/images/logo/dugun.svg" alt="Düğün.com Logo" class="mx-auto h-16 w-auto mb-4">
+            <h1 class="text-5xl md:text-5xl font-black gradient-text">Düğün.com Firma Skoru Sistemi</h1>
+            <p class="text-lg md:text-xl text-gray-600 mt-4 max-w-3xl mx-auto">İş ortaklarımızla bağımızı güçlendirecek, panel kullanımını teşvik edecek ve başarıyı ödüllendirecek</p>
+        </header>
+
+        <div class="w-full mb-10 border-b border-gray-300 flex justify-center flex-wrap">
+            <button id="tab-genel-bakis" class="tab-button active text-lg font-semibold px-6 py-3 border-b-2" onclick="switchTab('genel-bakis')">Genel Bakış</button>
+            <button id="tab-detaylar" class="tab-button text-lg font-semibold px-6 py-3 border-b-2 border-transparent" onclick="switchTab('detaylar')">Detaylar Sayfası</button>
+            <button id="tab-metrikler" class="tab-button text-lg font-semibold px-6 py-3 border-b-2 border-transparent" onclick="switchTab('metrikler')">Puanlama Metrikleri & Kurgu</button>
+            <button id="tab-oduller" class="tab-button text-lg font-semibold px-6 py-3 border-b-2 border-transparent" onclick="switchTab('oduller')">Ödüller</button>
+            <button id="tab-panel-dashboard" class="tab-button text-lg font-semibold px-6 py-3 border-b-2 border-transparent" onclick="switchTab('panel-dashboard')">Panel Dashboard Örneği</button>
+        </div>
+
+        <main id="content-area">
+            <div id="genel-bakis-content">
+                <section class="mb-16 bg-white p-8 rounded-xl shadow-md">
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="text-left">
+                             <h2 class="text-3xl font-bold text-center md:text-left mb-6">Düğün.com Firma Skoru: Puanlama ve Yarışma</h2>
+                             <div class="text-gray-700 space-y-4">
+                                <p><strong>Mekan kategorisinde</strong> yer alan firmalarımızın Düğün.com'daki başarısını ölçmek, potansiyelinizi en üst seviyeye çıkarmak ve diğer firmalar arasındaki sıralamasını görmek için <strong>Firma Skoru</strong> sistemi geliştiriyoruz.</p>
+                                <p>Firmalarımızın Düğün.com panellerinde <strong>tamamlayacakları aksiyonlara göre puan toplayacaklar</strong>; bu puanlar ile firma skorları ve diğer firmalar arasında kaçıncı sırada oldukları belirlenecek.</p>
+                                <p>Bu sistemle firmaların hem performansını artırmasını hem de sürpriz ödüller kazanmasını hedefliyoruz.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <img src="https://github.com/nesibekeles/Yarisma/blob/main/giris%20image.jpg?raw=true" alt="Giriş Görseli" class="rounded-lg shadow-lg w-full h-auto">
+                        </div>
+                    </div>
+                </section>
+                <section class="mb-16 bg-white p-8 rounded-xl shadow-md">
+                    <h2 class="text-3xl font-bold text-center mb-10">Stratejik Amaç: Neden Yapıyoruz?</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div class="text-center">
+        <div class="text-5xl mb-4 flex justify-center">
+            <span class="icon" style="-webkit-mask-image: url(https://cdn.jsdelivr.net/npm/lucide-static/icons/handshake.svg); mask-image: url(https://cdn.jsdelivr.net/npm/lucide-static/icons/handshake.svg);"></span>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Bağlılığı Artırmak</h3>
+        <p class="text-gray-600">Firmalarımızın platforma olan aidiyetini güçlendirmek ve Düğün.com'u vazgeçilmez bir iş ortağı olarak konumlandırmak.</p>
+    </div>
+    <div class="text-center">
+        <div class="text-5xl mb-4 flex justify-center">
+            <span class="icon" style="-webkit-mask-image: url(https://cdn.jsdelivr.net/npm/lucide-static/icons/shield-check.svg); mask-image: url(https://cdn.jsdelivr.net/npm/lucide-static/icons/shield-check.svg);"></span>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Panel Etkinliğini Sağlamak</h3>
+        <p class="text-gray-600">Oyunlaştırma ile tekliflere dönüş hızı, profil güncelleme gibi kritik metriklerde verimi artırmak.</p>
+    </div>
+    <div class="text-center">
+        <div class="text-5xl mb-4 flex justify-center">
+            <span class="icon" style="-webkit-mask-image: url(https://cdn.jsdelivr.net/npm/lucide-static/icons/trophy.svg); mask-image: url(https://cdn.jsdelivr.net/npm/lucide-static/icons/trophy.svg);"></span>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Yarışma & Ödüllendirme</h3>
+        <p class="text-gray-600">Başarılı iş ortaklarımızı onurlandırmak, aylık ödüllerle devamlılığı teşvik etmek.</p>
+    </div>
+    <div class="text-center">
+        <div class="text-5xl mb-4 flex justify-center">
+            <span class="icon" style="-webkit-mask-image: url(https://cdn.jsdelivr.net/npm/lucide-static/icons/users.svg); mask-image: url(https://cdn.jsdelivr.net/npm/lucide-static/icons/users.svg);"></span>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Topluluk Yaratmak</h3>
+        <p class="text-gray-600">Sektörde standartları belirleyen, en iyi iş ortaklarından oluşan bir "elçiler topluluğu"nun temelini atmak.</p>
+    </div>
+</div>
+                </section>
+            </div>
+            
+            <div id="detaylar-content" class="hidden">
+                <div class="space-y-12">	
+                    <section class="bg-white p-8 rounded-xl shadow-md">
+                        <h3 class="text-2xl font-bold mb-6 flex items-center text-4xl"><span class="icon mr-4" style="-webkit-mask-image: url(https://cdn.jsdelivr.net/npm/lucide-static/icons/target.svg); mask-image: url(https://cdn.jsdelivr.net/npm/lucide-static/icons/target.svg);"></span><span class="text-2xl">1. Firma Skoru Nedir ve Ne İşe Yarar</span></h3>
+                        <p class="mb-4 text-gray-700"><b>Firma Skoru</b>, Düğün.com platformunu ne kadar verimli kullandığınızı gösteren bir performans puanıdır. Bu skor sayesinde:</p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start"><span class="text-green-500 font-bold text-xl mr-3">✔</span><div><b>Performansınızı Ölçebilirsiniz:</b> Platform üzerindeki eksiklerinizi ve güçlü yönlerinizi net bir şekilde görebilirsiniz.</div></li>
+                            <li class="flex items-start"><span class="text-green-500 font-bold text-xl mr-3">✔</span><div><b>Sıralamanızı Takip Edebilirsiniz:</b> Düğün.com’daki diğer mekanlar arasında kaçıncı sırada olduğunuzu anlık olarak takip ederek rekabette öne geçme fırsatı yakalarsınız.</div></li>
+                             <li class="flex items-start"><span class="text-green-500 font-bold text-xl mr-3">✔</span><div>Ayrıca gelecekte bu skor sayesinde sürpriz ödüller kazanabilirsiniz.</div></li>
+                        </ul>
+                        <p class="mt-4 p-4 bg-blue-50 text-blue-800 rounded-lg font-semibold text-center">Skorunuz ne kadar yüksek olursa, o kadar iyi iş çıkarıyorsunuz demektir!</p>
+                    </section>
+                    
+                    <section class="bg-white p-8 rounded-xl shadow-md">
+                        <h3 class="text-2xl font-bold mb-2 flex items-center text-4xl"><span class="icon mr-4" style="-webkit-mask-image: url(https://cdn.jsdelivr.net/npm/lucide-static/icons/bar-chart-3.svg); mask-image: url(https://cdn.jsdelivr.net/npm/lucide-static/icons/bar-chart-3.svg);"></span><span class="text-2xl">2. Firma Skorunu Belirleyen Kriterler</span></h3>
+                        <p class="mb-6 text-gray-700">Firma Skorunuz, her zaman <b>son 30 gün içinde aldığınız aksiyonlar</b> üzerinden dinamik olarak hesaplanır. Maksimum puana ulaşmanızı sağlayan ana kriterler şunlardır:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-pink-500">
+                                <h4 class="font-bold text-lg mb-2">Profil Geliştirmeleri</h4>
+                                <ul class="list-disc list-inside space-y-2 text-sm text-gray-600">
+                                    <li>Galerinizde <b>en az 40 fotoğraf</b> olması ve düzenli olarak güncellenmesi.</li>
+                                    <li>Sayfanızda <b>en az 10 adet çift yorumu</b> olması ve yeni yorumlar eklenmesi.</li>
+                                    <li><b>Aktif ve güncel bir kampanyanızın</b> bulunması.</li>
+                                    <li>Fiyat bilgilerinizin <b>güncel tarihli</b> olması.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-500">
+                                <h4 class="font-bold text-lg mb-2">Teklif Yönetimi</h4>
+                                <ul class="list-disc list-inside space-y-2 text-sm text-gray-600">
+                                    <li>Gelen taleplere ortalama <b>1 saatin altında</b> dönüş yapmanız.</li>
+                                    <li>Size gelen <b>tüm tekliflere eksiksiz dönüş</b> yapmış olmanız.</li>
+                                    <li>Görüştüğünüz çiftlerle ilgili tekliflerin son durumunu (<b>anlaştım, olumsuz vb.</b>) panelden işaretlemeniz.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-green-500">
+                                <h4 class="font-bold text-lg mb-2">Bonus Puan</h4>
+                                <ul class="list-disc list-inside space-y-2 text-sm text-gray-600">
+                                    <li>Çiftlere sadece <b>Düğün.com'a özel indirimli bir fiyat</b> sunmanız size ekstra puan kazandırır!</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="bg-white p-8 rounded-xl shadow-md">
+                        <h3 class="text-2xl font-bold mb-6 flex items-center text-4xl"><span class="icon mr-4" style="-webkit-mask-image: url(https://cdn.jsdelivr.net/npm/lucide-static/icons/map-pin.svg); mask-image: url(https://cdn.jsdelivr.net/npm/lucide-static/icons/map-pin.svg);"></span><span class="text-2xl">3. Skor ve Sıralama Nereden Takip Edilir</span></h3>
+                        <div class="space-y-8">
+                            <div>
+                                <h4 class="font-semibold text-xl mb-2">Panel Ana Sayfası</h4>
+                                <p class="mb-4 text-gray-700">Panele giriş yaptığınızda sizi karşılayan ana ekranda Firma Skorunuzu ve sıralamanızı içeren bir kart göreceksiniz.</p>
+                                <div class="flex flex-wrap gap-4">
+                                    <img src="https://github.com/nesibekeles/Yarisma/blob/main/panel_dashboard.png?raw=true" class="thumbnail w-48 h-auto rounded-md border shadow-sm" onclick="openModal(this.src)">
+                                    <img src="https://github.com/nesibekeles/Yarisma/blob/main/info_page.png?raw=true" class="thumbnail w-48 h-auto rounded-md border shadow-sm" onclick="openModal(this.src)">
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-xl mb-2">Sayfalarım Ekranı</h4>
+                                <p class="mb-4 text-gray-700">Yönettiğiniz her bir mekan sayfasının kartında o mekana ait skoru ayrı olarak görebilirsiniz.</p>
+                                <img src="https://github.com/nesibekeles/Yarisma/blob/main/sayfalarim.png?raw=true" class="thumbnail w-48 h-auto rounded-md border shadow-sm" onclick="openModal(this.src)">
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-xl mb-2">İstatistikler Menüsü</h4>
+                                <p class="mb-4 text-gray-700">"Sayfa İstatistikleri" ve "Rakip Analizi" sekmelerinde skorunuzu ve diğer firmalarla karşılaştırmalı detaylı verileri bulabilirsiniz.</p>
+                                <div class="flex flex-wrap gap-4">
+                                    <img src="https://github.com/nesibekeles/Yarisma/blob/main/sayfa_istatistikleri.png?raw=true" class="thumbnail w-48 h-auto rounded-md border shadow-sm" onclick="openModal(this.src)">
+                                    <img src="https://github.com/nesibekeles/Yarisma/blob/main/rakip_analizi.png?raw=true" class="thumbnail w-48 h-auto rounded-md border shadow-sm" onclick="openModal(this.src)">
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-xl mb-2">Skor Renkleri Ne Anlama Geliyor?</h4>
+                                <p class="mb-4 text-gray-700">Panel ana sayfasındaki skor kartınız, performansınıza göre renk değiştirir:</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+                                    <div class="p-4 rounded-lg border-2 border-green-500 bg-green-50"><span class="font-bold text-green-700">Yeşil (80+ Puan):</span> Mükemmel! Platformu çok verimli kullanıyorsunuz.</div>
+                                    <div class="p-4 rounded-lg border-2 border-yellow-500 bg-yellow-50"><span class="font-bold text-yellow-700">Sarı (60-79 Puan):</span> Çok İyi! Ufak dokunuşlarla en üst seviyeye çıkabilirsiniz.</div>
+                                    <div class="p-4 rounded-lg border-2 border-orange-500 bg-orange-50"><span class="font-bold text-orange-700">Turuncu (30-59 Puan):</span> Geliştirmeli. Puan kriterlerini gözden geçirerek skorunuzu kolayca artırabilirsiniz.</div>
+                                    <div class="p-4 rounded-lg border-2 border-red-500 bg-red-50"><span class="font-bold text-red-700">Kırmızı (0-29 Puan):</span> Dikkat! Platformun sunduğu fırsatları kaçırıyorsunuz. Skorunuzu yükseltmek için hemen aksiyon almalısınız.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="bg-white p-8 rounded-xl shadow-md">
+                        <h3 class="text-2xl font-bold mb-6 flex items-center text-4xl"><span class="icon mr-4" style="-webkit-mask-image: url(https://cdn.jsdelivr.net/npm/lucide-static/icons/help-circle.svg); mask-image: url(https://cdn.jsdelivr.net/npm/lucide-static/icons/help-circle.svg);"></span><span class="text-2xl">4. Sıkça Sorulan Sorular (SSS)</span></h3>
+                        <div class="space-y-4">
+                            <details>
+                                <summary>Sıralama hangi firmalar arasında yapılır?</summary>
+                                <div><p>Düğün.com'da <strong>2 ayını doldurmuş olan "Mekan"</strong> kategorisindeki tüm iş ortaklarımız sıralamaya dahil edilir.</p></div>
+                            </details>
+                            <details>
+                                <summary>Yeni bir firmayım, sıralamada neden görünmüyorum?</summary>
+                                <div><p>Sıralama, sadece 60 gününü doldurmuş firmalar arasında yapılır. Eğer yeni bir iş ortağımızsanız, 60 günün sonunda sıralamaya otomatik olarak dahil edilirsiniz. Bu süreçte panelinizde firma skorunuzu takip etmeye devam edebilirsiniz.</p></div>
+                            </details>
+                            <details>
+                                <summary>Düğün.com’da birden fazla sayfam var, puanlama nasıl yapılıyor?</summary>
+                                <div><p>Firma Skoru, Düğün.com’daki her bir sayfanız (firma-kategori-paket) için <b>ayrı ayrı</b> hesaplanır. Bir mekandaki yüksek skorunuz diğerini etkilemez. Her mekanınızla ayrı ayrı ilgilenmeniz ve aksiyonları almanız gerekir.</p></div>
+                            </details>
+                            <details>
+                                <summary>Skorum ne sıklıkla güncelleniyor?</summary>
+                                <div><p>Firma Skorunuz ve sıralamanız, son 30 günlük verilerinize göre <b>her gün</b> otomatik olarak güncellenir.</p></div>
+                            </details>
+                             <details>
+                                <summary>Aynı sayfada yetkili olan birden fazla kullanıcımız var, ödül kime verilecek?</summary>
+                                <div><p>Ödüllendirme, ödül kazanan sayfada yetkili olan ve <b>son 1 ay içinde panelde aktif olarak işlem yapmış olan tüm kullanıcılara</b> yapılır.</p></div>
+                            </details>
+                             <details>
+                                <summary>Birden fazla kişiyiz ama tek bir kullanıcının hesabından işlem yapıyoruz, herkes ödül alır mı?</summary>
+                                <div><p>Hayır, <b>sadece sistemde işlem gerçekleştiren kullanıcılar</b> yararlanabilir. Bu nedenle herkesin kendi kullanıcısından işlem yaptığına emin olun.</p></div>
+                            </details>
+                             <details>
+                                <summary>Bana ait bir kullanıcımız yok, ortak hesaptan işlem yapıyoruz. Ne yapmam lazım?</summary>
+                                <div><p>Eğer kendinize ait bir kullanıcı yoksa veya giriş bilgilerinizi hatırlamıyorsanız, Performans Yöneticinizden destek alabilirsiniz. Ayrıca dilerseniz <a href="#" class="text-blue-600 hover:underline">bu link üstünden</a> talebinizi iletebilirsiniz.</p></div>
+                            </details>
+                             <details>
+                                <summary>Kazandığımı nasıl öğreneceğim?</summary>
+                                <div><p>Sürpriz ödül kazananları, mekan kategorisindeki tüm iş ortaklarımıza e-posta ile duyurulacaktır.</p></div>
+                            </details>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div id="metrikler-content" class="hidden">
+                 <section class="mb-16 bg-white p-8 rounded-xl shadow-md">
+                    <h2 class="text-3xl font-bold text-center mb-10">Proje Mekanizması: Sistem Nasıl İşleyecek?</h2>
+                    <div class="max-w-6xl mx-auto">
+                        <h3 class="text-2xl font-bold mb-6 text-center">Ödüllendirme Kapsamı</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div class="flow-card bg-gray-50 p-4 rounded-lg">
+                                <p><span class="font-bold">Firma (Provider) Seviyesi:</span> Puanlama ve ödüllendirme, her bir işletmeyi temsil eden Provider (RÇİ) bazında yapılır.</p>
+                                <div class="mt-2 p-2 bg-blue-100 text-blue-800 text-xs rounded-md">💡&nbsp;<strong>Hint:</strong> Aynı customer altında olan providerlar da ayrı ayrı değerlendirilir.</div>
+                            </div>
+                            <div class="flow-card bg-gray-50 p-4 rounded-lg">
+                                <p><span class="font-bold">Kullanıcı (User) Seviyesi:</span> Ödül, hak eden provider'da yetkili olan ve panelde son 1 ayda işlem yapmış tüm kullanıcılara gönderilir.</p>
+                                <div class="mt-2 p-2 bg-blue-100 text-blue-800 text-xs rounded-md">💡&nbsp;<strong>Hint:</strong> Kullanıcıların yetkili olduğu en üst seviyedeki providera göre hangi ödülü alacağı belirlenir.</div>
+                            </div>
+                             <div class="flow-card bg-gray-50 p-4 rounded-lg">
+                                <p><span class="font-bold">Yarışma Kümesi:</span> 2. ayını doldurmuş, paid bütün mekanlar bir arada değerlendirilir. (~1900 firma)</p>
+                                <div class="mt-2 p-2 bg-blue-100 text-blue-800 text-xs rounded-md">💡&nbsp;<strong>Hint:</strong> Birden fazla provider aynı skorda ve aynı sırada yer alabilir.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="mb-16 bg-white p-8 rounded-xl shadow-md">
+                    <h2 class="text-3xl font-bold text-center mb-10">Örnek Ödül Kazanım Kurgusu</h2>
+                    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+                        <div class="p-6 rounded-lg border-2 border-gray-200 flex flex-col">
+                            <h4 class="text-lg font-bold">Firma Skoru</h4>
+                            <p class="text-gray-600 mt-2">Firmalar, ay boyunca yaptıkları aksiyonlardan puan toplar ve diğer firmalar arasında kaçıncı sırada olduklarını görürler.</p>
+                        </div>
+                        <div class="p-6 rounded-lg border-2 border-gray-200 flex flex-col">
+                            <h4 class="text-lg font-bold">Ödül Kazanımı</h4>
+                            <p class="text-gray-600 mt-2">Her ay sıralamada en iyiler arasında yer alan firmaların aktif kullanıcılarına ödüller gönderilir.</p>
+                        </div>
+                        <div class="p-6 rounded-lg border-2 border-gray-200 flex flex-col">
+                            <h4 class="text-lg font-bold">Bonus Ödüller</h4>
+                            <p class="text-gray-600 mt-2">Sabit ödüle ek olarak, ilgili ayda belirlenecek belirli bir aksiyona göre büyük ödüller gönderilebilir.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-center mb-8 bg-gray-50 p-4 rounded-lg max-w-4xl mx-auto">
+                            <p class="text-gray-700">Her ay sabit olarak <span class="font-bold text-pink-600">ilk 100'de yer alan</span> tüm firmalara <span class="font-bold">Starbucks Kahvesi</span> hediye edilir.</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                            <div class="border p-4 rounded-lg bg-white text-center">
+                                <h3 class="font-bold text-lg">Ekim</h3>
+                                <p class="text-gray-600 mt-2">Sabit ödüle ek olarak, bu ay <span class="font-bold">en çok yorum alan 10 firmaya</span> Arçelik'ten 20.000 TL'lik hediye çeki.</p>
+                            </div>
+                            <div class="border p-4 rounded-lg bg-white text-center">
+                                <h3 class="font-bold text-lg">Kasım</h3>
+                                <p class="text-gray-600 mt-2">Sabit ödüle ek olarak, bu ay <span class="font-bold">en çok fotoğraf ekleyen 10 firmaya</span> Beko'dan 20.000 TL'lik hediye çeki.</p>
+                            </div>
+                            <div class="border p-4 rounded-lg bg-white text-center">
+                                <h3 class="font-bold text-lg">Aralık</h3>
+                                <p class="text-gray-600 mt-2">Sabit ödüle ek olarak, bu ay <span class="font-bold">Düğün.com'a özel fiyat veren ilk 10 firmaya</span> Teknosa'dan 20.000 TL'lik hediye çeki.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="bg-white p-8 rounded-xl shadow-md">
+                    <h2 class="text-3xl font-bold text-center mb-10">Firma Skoru Metrikleri</h2>
+
+                    <div class="mb-16">
+                        <h4 class="text-xl font-bold text-center text-pink-600 mb-6">Puan Hesaplama</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div>
+                                <h5 class="font-semibold text-lg mb-3 border-b pb-2">Profil Geliştirmeleri</h5>
+                              <div class="space-y-2">
+				<label class="flex items-center bg-white p-2 rounded shadow-sm"><input type="checkbox" class="h-5 w-5 accent-pink-600 mr-3">Minimum 40 fotoğraf → <strong> 5 Puan</strong> </label>
+				<label class="flex items-center bg-white p-2 rounded shadow-sm"><input type="checkbox" class="h-5 w-5 accent-pink-600 mr-3">Minimum 10 yorum → <strong>5 Puan</strong> </label>
+				<label class="flex items-center bg-white p-2 rounded shadow-sm"><input type="checkbox" class="h-5 w-5 accent-pink-600 mr-3">Minimum 1 aktif kampanya → <strong>15 Puan</strong></label>
+				<label class="flex items-center bg-white p-2 rounded shadow-sm"><input type="checkbox" class="h-5 w-5 accent-pink-600 mr-3">Güncel fiyat bilgisi → <strong> 5 Puan </strong></label>
+				</div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-lg mb-3 border-b pb-2">Teklif Yönetimi</h5>
+                               <div class="space-y-2">
+				<label class="flex items-center bg-white p-2 rounded shadow-sm"><input type="checkbox" class="h-5 w-5 accent-pink-600 mr-3">1 saatin altında dönüş süresi → <strong> 30 Puan</strong> </label>
+				<label class="flex items-center bg-white p-2 rounded shadow-sm"><input type="checkbox" class="h-5 w-5 accent-pink-600 mr-3">%100 dönüş oranı → <strong> 30 Puan</strong> </label>
+				<label class="flex items-center bg-white p-2 rounded shadow-sm"><input type="checkbox" class="h-5 w-5 accent-pink-600 mr-3">Minimum %90 sonuç kodu → <strong> 10 Puan</strong> </label>
+				</div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-lg mb-3 border-b pb-2">Bonuslar</h5>
+                                <div class="space-y-2">
+				<label class="flex items-center bg-white p-2 rounded shadow-sm"><input type="checkbox" class="h-5 w-5 accent-pink-600 mr-3">Düğün.com özel fiyatı → <strong> 10 Bonus Puan</strong> </label>
+				<label class="flex items-center bg-white p-2 rounded shadow-sm"><input type="checkbox" class="h-5 w-5 accent-pink-600 mr-3">7 günden uzun süredir paneline girmeyen firmalar sıralamaya dahil edilmez, "alert" işaretlenir. </label>
+				<label class="flex items-center bg-white p-2 rounded shadow-sm"><input type="checkbox" class="h-5 w-5 accent-pink-600 mr-3">0-60 günündeki firmalar puanını görür ancak sıralamaya dahil edilmez. Sıralama yerinde "2. ayını dolduran firmalar sıralamaya dahil edilir." bilgisi görür.</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+             <div id="oduller-content" class="hidden">
+                <section class="mb-16 bg-white p-8 rounded-xl shadow-md">
+                    <h2 class="text-3xl font-bold text-center mb-10">Ödül Opsiyonları</h2>
+                    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <label class="p-6 rounded-lg border-2 has-[:checked]:border-green-500 has-[:checked]:bg-green-50 flex flex-col space-y-4">
+                            <div class="flex items-center w-full"><input type="checkbox" name="odul" class="w-6 h-6 accent-green-600"><img src="https://github.com/nesibekeles/Yarisma/blob/main/starbucks%20yatay.png?raw=true" alt="Starbucks Logo" class="h-10 ml-4"></div>
+                            <ul class="text-sm space-y-2 list-disc list-inside text-gray-700"><li><b>İndirim:</b> Adet ve tutardan bağımsız %10 sabit iskonto uygulanır.</li><li><b>Dağıtım:</b> Dijital QR kodlar ZIP dosyası ile tek yetkiliye (Düğün.com'a) iletilir. Dağıtım operasyonu Düğün.com tarafından yapılır.</li><li><b>Ödeme:</b> Ödemeler aylık olarak Havale/EFT ile yapılır.</li><li><b>Kullanım:</b> 1 yıl geçerlidir. Parçalı kullanıma uygundur.</li><li><b>Fatura:</b> KDV dahil fatura kesilir.</li></ul>
+                        </label>
+                        <label class="p-6 rounded-lg border-2 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50 flex flex-col space-y-4">
+                            <div class="flex items-center w-full"><input type="checkbox" name="odul" class="w-6 h-6 accent-orange-600"><img src="https://github.com/nesibekeles/Yarisma/blob/main/biletix%20yatay.png?raw=true" alt="Biletix Logo" class="h-8 ml-4"></div>
+                            <ul class="text-sm space-y-2 list-disc list-inside text-gray-700"><li><b>İndirim:</b> Yıllık alım tutarına göre kademeli: 1M TL üzeri %1, 1.5M TL üzeri %1.5, 2M TL üzeri %2.</li><li><b>Dağıtım:</b> Düğün.com'a şifreli Excel dosyası iletilir. 150 adet üzeri alımlarda Biletix, KVKK sözleşmesi ile dağıtımı yapabilir.</li><li><b>Ödeme:</b> Siparişte havale ile, maksimum 15 gün vade.</li><li><b>Kullanım:</b> 1 yıl geçerlidir. Parçalı kullanıma uygundur. Bir işlemde 1 kart kullanılır.</li><li><b>Fatura:</b> Hediye kartı alımında dekont kesilir, bilet alımının kendisi fatura yerine geçer.</li></ul>
+                        </label>
+                        <label class="p-6 rounded-lg border-2 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 flex flex-col space-y-4">
+                            <div class="flex items-center w-full"><input type="checkbox" name="odul" class="w-6 h-6 accent-blue-600"><img src="https://github.com/nesibekeles/Yarisma/blob/main/hepsiburada.png?raw=true" alt="Hepsiburada Logo" class="h-6 ml-4"></div>
+                            <ul class="text-sm space-y-2 list-disc list-inside text-gray-700"><li><b>İndirim:</b> 250.000 TL ve üzeri alımlarda özel iskonto uygulanır.</li><li><b>Dağıtım:</b> Sadece dijital kod olarak Düğün.com'a iletilir, dağıtım Düğün.com tarafından yapılır.</li><li><b>Ödeme:</b> Havale/EFT ile iş ortakları Larabay üzerinden yapılır.</li><li><b>Kullanım:</b> 1 yıl geçerlidir. Parçalı kullanıma uygundur, kalan bakiye hesaba yeni çek olarak tanımlanır. Sadece Hepsiburada satıcılı ürünlerde geçerlidir.</li><li><b>Fatura:</b> Larabay tarafından %0 KDV'li olarak kesilir.</li></ul>
+                        </label>
+                    </div>
+                </section>
+                <section class="mb-16 bg-white p-8 rounded-xl shadow-md">
+                    <h2 class="text-3xl font-bold text-center mb-10">Maliyet Hesaplama</h2>
+                    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                        <div class="space-y-4 p-4 border rounded-lg"><h3 class="font-bold text-lg text-center">Küçük Ödül Hesaplayıcı</h3><div><label for="kucukOdulAdet" class="block text-sm font-medium text-gray-700">Aylık Ortalama Adet</label><input type="number" id="kucukOdulAdet" value="50" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm" oninput="hesaplaMaliyet()"></div><div><label for="kucukOdulMaliyet" class="block text-sm font-medium text-gray-700">Adet Başına Maliyet (TL)</label><input type="number" id="kucukOdulMaliyet" value="200" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm" oninput="hesaplaMaliyet()"></div><div><label for="kucukOdulIskonto" class="block text-sm font-medium text-gray-700">İskonto Oranı (%)</label><input type="number" id="kucukOdulIskonto" value="10" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm" oninput="hesaplaMaliyet()"></div></div>
+                        <div class="space-y-4 p-4 border rounded-lg"><h3 class="font-bold text-lg text-center">Büyük Ödül Hesaplayıcı</h3><div><label for="buyukOdulAdet" class="block text-sm font-medium text-gray-700">Aylık Ortalama Adet</label><input type="number" id="buyukOdulAdet" value="10" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm" oninput="hesaplaMaliyet()"></div><div><label for="buyukOdulMaliyet" class="block text-sm font-medium text-gray-700">Adet Başına Maliyet (TL)</label><input type="number" id="buyukOdulMaliyet" value="20000" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm" oninput="hesaplaMaliyet()"></div><div><label for="buyukOdulIskonto" class="block text-sm font-medium text-gray-700">İskonto Oranı (%)</label><input type="number" id="buyukOdulIskonto" value="0" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm" oninput="hesaplaMaliyet()"></div></div>
+                        <div class="bg-gray-50 rounded-lg p-8 text-center lg:mt-5"><h3 class="text-lg font-medium text-gray-500">Tahmini Toplam Yıllık Bütçe</h3><p id="yillikMaliyet" class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-500 mt-2">2.508.000,00 TL</p></div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="panel-dashboard-content" class="hidden">
+                 <div class="p-8 space-y-12">
+                    <div><h2 class="text-2xl font-bold mb-4 text-center">Panel Ana Sayfa</h2><img src="https://github.com/nesibekeles/Yarisma/blob/main/panel_dashboard.png?raw=true" alt="Panel Ana Sayfa" class="w-full h-auto rounded-lg shadow-lg border"></div>
+                    <div><h2 class="text-2xl font-bold mb-4 text-center">Info Butonu Sayfası</h2><img src="https://github.com/nesibekeles/Yarisma/blob/main/info_page.png?raw=true" alt="Info Butonu Sayfası" class="w-full h-auto rounded-lg shadow-lg border"></div>
+                    <div><h2 class="text-2xl font-bold mb-4 text-center">Sayfalarım Ekranı</h2><img src="https://github.com/nesibekeles/Yarisma/blob/main/sayfalarim.png?raw=true" alt="Sayfalarım Ekranı" class="w-full h-auto rounded-lg shadow-lg border"></div>
+                    <div><h2 class="text-2xl font-bold mb-4 text-center">Sayfa İstatistikleri Ekranı</h2><img src="https://github.com/nesibekeles/Yarisma/blob/main/Panel%20Dashboard_sayfa%20istatistiklerim.png?raw=true" alt="Sayfa İstatistikleri Ekranı" class="w-full h-auto rounded-lg shadow-lg border"></div>
+                    <div><h2 class="text-2xl font-bold mb-4 text-center">Rakip Analizi Ekranı</h2><img src="https://github.com/nesibekeles/Yarisma/blob/main/rakip_analizi.png?raw=true" alt="Rakip Analizi Ekranı" class="w-full h-auto rounded-lg shadow-lg border"></div>
+                 </div>
+            </div>
+        </main>
+
+        <footer class="text-center p-8 mt-8 border-t border-gray-200">
+            <p class="text-gray-600">&copy; 2025 Düğün.com - Her Düğün Düğün.com'la Başlar.</p>
+        </footer>
+    </div>
+    
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        if (document.getElementById('kucukOdulAdet')) {
+            hesaplaMaliyet();
+        }
+    });
+
+    function switchTab(tabName) {
+        const contents = ['genel-bakis-content', 'detaylar-content', 'metrikler-content', 'oduller-content', 'panel-dashboard-content'];
+        const tabs = ['tab-genel-bakis', 'tab-detaylar', 'tab-metrikler', 'tab-oduller', 'tab-panel-dashboard'];
+
+        contents.forEach(contentId => {
+            const contentElement = document.getElementById(contentId);
+            if (contentId.startsWith(tabName)) {
+                contentElement.classList.remove('hidden');
+            } else {
+                contentElement.classList.add('hidden');
+            }
+        });
+
+        tabs.forEach(tabId => {
+            const tabElement = document.getElementById(tabId);
+            if (tabId.startsWith(`tab-${tabName}`)) {
+                tabElement.classList.add('active');
+            } else {
+                tabElement.classList.remove('active');
+            }
+        });
+    }
+    
+    // Image Modal Functions
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById("modalImage");
+    function openModal(src) {
+        modal.style.display = "flex";
+        modalImg.src = src;
+    }
+    function closeModal() {
+        modal.style.display = "none";
+    }
+
+    // Cost Calculator Function
+    function hesaplaMaliyet() {
+        const kucukAdet = parseFloat(document.getElementById('kucukOdulAdet').value) || 0;
+        const kucukMaliyet = parseFloat(document.getElementById('kucukOdulMaliyet').value) || 0;
+        const kucukIskonto = parseFloat(document.getElementById('kucukOdulIskonto').value) || 0;
+        const buyukAdet = parseFloat(document.getElementById('buyukOdulAdet').value) || 0;
+        const buyukMaliyet = parseFloat(document.getElementById('buyukOdulMaliyet').value) || 0;
+        const buyukIskonto = parseFloat(document.getElementById('buyukOdulIskonto').value) || 0;
+        const yillikKucukMaliyet = kucukAdet * kucukMaliyet * 12 * (1 - (kucukIskonto / 100));
+        const yillikBuyukMaliyet = buyukAdet * buyukMaliyet * 12 * (1 - (buyukIskonto / 100));
+        const toplamYillikMaliyet = yillikKucukMaliyet + yillikBuyukMaliyet;
+        const formattedMaliyet = toplamYillikMaliyet.toLocaleString('tr-TR', {
+            style: 'currency', currency: 'TRY', minimumFractionDigits: 0, maximumFractionDigits: 0
+        });
+        const maliyetElement = document.getElementById('yillikMaliyet');
+        if (maliyetElement) {
+            maliyetElement.innerText = formattedMaliyet;
+        }
+    }
+</script>
+</body>
+</html>
