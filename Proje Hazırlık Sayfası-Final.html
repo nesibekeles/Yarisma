@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Düğün.com Loyalty & Engagement Sistemi - Proje Sayfası</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F8F9FA; }
+        .gradient-text { background: linear-gradient(90deg, #db0962, #0173ea); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .flow-card { border-left: 4px solid #db0962; transition: all 0.3s ease; }
+        .flow-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .tab-button { transition: all 0.3s ease; }
+        .tab-button.active { color: #db0962; border-color: #db0962; }
+        .checkbox-item { background-color: #fff; padding: 0.75rem 1rem; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; align-items: center; }
+        .checkbox-item input { accent-color: #db0962; width: 1.25rem; height: 1.25rem; margin-right: 0.75rem; flex-shrink: 0; }
+        
+        /* Dashboard için ek stiller */
+        #panel-dashboard-content .tab-button.active { color: #00897b; border-bottom-color: #00897b; }
+        #panel-dashboard-content .progress-bar-fill {
+            background: linear-gradient(90deg, #84fab0 0%, #8fd3f4 100%);
+            transition: width 0.5s ease-in-out;
+        }
+        #panel-dashboard-content .reward-card { perspective: 1000px; }
+        #panel-dashboard-content .reward-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+        #panel-dashboard-content .reward-card.flipped .reward-card-inner { transform: rotateY(180deg); }
+        #panel-dashboard-content .reward-card-front, #panel-dashboard-content .reward-card-back {
+            position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden;
+        }
+        #panel-dashboard-content .reward-card-back { transform: rotateY(180deg); }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center my-8 md:mb-12">
+            <img src="https://dugun.com/assets/images/logo/dugun.svg" alt="Düğün.com Logo" class="mx-auto h-16 w-auto mb-4">
+            <h1 class="text-4xl md:text-5xl font-black gradient-text">Düğün.com Loyalty & Engagement Sistemi</h1>
+            <p class="text-lg md:text-xl text-gray-600 mt-4 max-w-3xl mx-auto">İş ortaklarımızla bağımızı güçlendirecek, panel kullanımını teşvik edecek ve başarıyı ödüllendirecek yeni nesil sadakat programımız.</p>
+        </header>
+
+        <div class="w-full mb-10 border-b border-gray-300 flex justify-center">
+            <button id="tab-genel-bakis" class="tab-button active text-lg font-semibold px-6 py-3 border-b-2" onclick="switchTab('genel-bakis')">Genel Bakış</button>
+            <button id="tab-metrikler" class="tab-button text-lg font-semibold px-6 py-3 border-b-2 border-transparent" onclick="switchTab('metrikler')">Ödül Metrikleri & Kurgu</button>
+            <button id="tab-oduller" class="tab-button text-lg font-semibold px-6 py-3 border-b-2 border-transparent" onclick="switchTab('oduller')">Ödüller</button>
+            <button id="tab-panel-dashboard" class="tab-button text-lg font-semibold px-6 py-3 border-b-2 border-transparent" onclick="switchTab('panel-dashboard')">Panel Dashboard Örneği</button>
+            <button id="tab-duyurular" class="tab-button text-lg font-semibold px-6 py-3 border-b-2 border-transparent" onclick="switchTab('duyurular')">Duyurular</button>
+        </div>
+
+        <main id="content-area">
+            <div id="genel-bakis-content">
+                <section class="mb-16 bg-white p-8 rounded-xl shadow-md">
+                    <h2 class="text-3xl font-bold text-center mb-10">Stratejik Amaç: Neden Yapıyoruz?</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="text-center"><div class="text-5xl mb-4">🤝</div><h3 class="text-xl font-bold mb-2">Bağlılığı Artırmak</h3><p class="text-gray-600">Firmalarımızın platforma olan aidiyetini güçlendirmek ve Düğün.com'u vazgeçilmez bir iş ortağı olarak konumlandırmak.</p></div>
+                        <div class="text-center"><div class="text-5xl mb-4">🛡️</div><h3 class="text-xl font-bold mb-2">Panel Etkinliğini Sağlamak</h3><p class="text-gray-600">Oyunlaştırma ile tekliflere dönüş hızı, profil güncelleme gibi kritik metriklerde verimi artırmak.</p></div>
+                        <div class="text-center"><div class="text-5xl mb-4">👑</div><h3 class="text-xl font-bold mb-2">Prestij Kazandırmak</h3><p class="text-gray-600">Başarılı iş ortaklarımızı onurlandırmak, onlara sektörde prestijli bir konum ve görünürlük sağlamak.</p></div>
+                        <div class="text-center"><div class="text-5xl mb-4">⭐</div><h3 class="text-xl font-bold mb-2">Topluluk Yaratmak</h3><p class="text-gray-600">Sektörde standartları belirleyen, en iyi iş ortaklarından oluşan bir "elçiler topluluğu"nun temelini atmak.</p></div>
+                    </div>
+                </section>
+            </div>
+            
+            <div id="metrikler-content" class="hidden">
+               <section class="mb-16 bg-white p-8 rounded-xl shadow-md">
+                    <h2 class="text-3xl font-bold text-center mb-10">Proje Mekanizması: Sistem Nasıl İşleyecek?</h2>
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-2xl font-bold mb-6 text-center">Ödüllendirme Kapsamı</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="flow-card bg-gray-50 p-4 rounded-lg">
+                                <p><span class="font-bold">Firma (Provider) Seviyesi:</span> Puanlama ve ödüllendirme, her bir işletmeyi temsil eden Provider (RÇİ) bazında yapılır.</p>
+                                <div class="mt-2 p-2 bg-blue-100 text-blue-800 text-xs rounded-md">💡&nbsp;<strong>Hint:</strong> Kategorisindeki rekabette ilk sırada olan firmalara "Ayın En Hızlısı" gibi dijital badge'ler verilebilir.</div>
+                            </div>
+                            <div class="flow-card bg-gray-50 p-4 rounded-lg">
+                                <p><span class="font-bold">Kullanıcı (User) Seviyesi:</span> Ödül, hak eden provider'da yetkili olan ve panelde son 1 ayda işlem yapmış tüm kullanıcılara gönderilir.</p>
+                                <div class="mt-2 p-2 bg-blue-100 text-blue-800 text-xs rounded-md">💡&nbsp;<strong>Hint:</strong> Gelecekte firma kullanıcıları panel üzerinden bir dashboard ile yarışmadaki puanlarını ve kazandıkları ödülleri takip edebilmeliler.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                        
+                <section class="mb-16 bg-white p-8 rounded-xl shadow-md">
+                    <h2 class="text-3xl font-bold text-center mb-10">Opsiyonel Yarışma Kümeleri</h2>
+                    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+                         <label class="checkbox-item p-6 border rounded-lg flex-col items-start space-y-2 has-[:checked]:border-pink-500 has-[:checked]:bg-pink-50">
+                            <div class="flex items-center w-full"><input type="checkbox" name="kume"><span class="font-bold ml-2">Tüm Data</span></div>
+                            <p class="text-gray-600 text-sm pl-8">Bütün mekanlar bir arada değerlendirilir. 
+(1 küme, 1900 firma)</p>
+                         </label>
+                         <label class="checkbox-item p-6 border rounded-lg flex-col items-start space-y-2 has-[:checked]:border-pink-500 has-[:checked]:bg-pink-50">
+                            <div class="flex items-center w-full"><input type="checkbox" name="kume"><span class="font-bold ml-2">İl Bazında</span></div>
+                            <p class="text-gray-600 text-sm pl-8"><strong>İstanbul, Büyük İller ve Diğer İller</strong> olarak gruplanır. Firmalar kendi kümesinde yarışır. (3 küme, ~600 firma/küme)</p>
+                         </label>
+                         <label class="checkbox-item p-6 border rounded-lg flex-col items-start space-y-2 has-[:checked]:border-pink-500 has-[:checked]:bg-pink-50">
+                            <div class="flex items-center w-full"><input type="checkbox" name="kume"><span class="font-bold ml-2">İl + Kategori Bazında</span></div>
+                            <p class="text-gray-600 text-sm pl-8">Firmalar ait olduğu il ve kategori (<strong>Düğün Mekanı, Düğün Öncesi/Sonrası Kutlama ve Kır Düğünü</strong>) kümesinde yarışır. (9 küme, ~200 firma/küme)</p>
+                         </label>
+                    </div>
+                </section>
+                <section class="mb-16 bg-white p-8 rounded-xl shadow-md">
+                    <h2 class="text-3xl font-bold text-center mb-10">Ödül Kazanım Kurgusu Seçenekleri</h2>
+                    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <label class="relative p-6 rounded-lg border-2 border-gray-200 has-[:checked]:border-pink-500 has-[:checked]:bg-pink-50 flex flex-col">
+                            <div class="absolute top-2 right-2 bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Dikkat: IT işi gerektirir</div>
+                            <div class="flex items-start">
+                                <input type="checkbox" name="kurgu" class="mt-1 w-5 h-5 accent-pink-600">
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-bold">Opsiyon 1: Puan Toplama Sistemi</h4>
+                                    <p class="text-gray-600">Firmalar, ay boyunca yaptıkları aksiyonlardan puan toplar. Ay sonunda ulaştıkları puan eşiğine göre kademeli ödüller kazanırlar.</p>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-gray-200 space-y-3 flex-grow flex flex-col justify-end">
+                                <div class="flex items-start"><span class="flex-shrink-0 text-lg mr-2">👍</span><div><span class="font-bold">Avantaj:</span> Tüm pozitif davranışları teşvik eder, oyunlaştırma ile sürekli katılım sağlar.</div></div>
+                                <div class="flex items-start"><span class="flex-shrink-0 text-lg mr-2">👎</span><div><span class="font-bold">Dezavantaj:</span> Puanlama mantığı ve takibi için kapsamlı bir altyapı geliştirilmesi gerekir.</div></div>
+                            </div>
+                        </label>
+                        <label class="relative p-6 rounded-lg border-2 border-gray-200 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-50 flex flex-col">
+                            <div class="absolute top-2 right-2 bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Dikkat: IT işi gerektirir</div>
+                            <div class="flex items-start">
+                                <input type="checkbox" name="kurgu" class="mt-1 w-5 h-5 accent-purple-600">
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-bold">Opsiyon 2: Liderlik Sıralaması</h4>
+                                    <p class="text-gray-600">"En çok fotoğraf ekleyen" gibi metriklerde firmalar sıralanır ve her kategoride ilk 10'a girenler ödül alır.</p>
+                                </div>
+                            </div>
+                             <div class="mt-4 pt-4 border-t border-gray-200 space-y-3 flex-grow flex flex-col justify-end">
+                                <div class="flex items-start"><span class="flex-shrink-0 text-lg mr-2">👍</span><div><span class="font-bold">Avantaj:</span> Yüksek rekabet ve heyecan yaratır.</div></div>
+                                <div class="flex items-start"><span class="flex-shrink-0 text-lg mr-2">👎</span><div><span class="font-bold">Dezavantaj:</span> Firmaların hangi sırada olduklarını takip edemeleri için geliştirme gerekir. Ayrıca sürekli aynı firmaların ödül alma riski doğar.</div></div>
+                            </div>
+                        </label>
+                        <label class="relative p-6 rounded-lg border-2 border-gray-200 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 flex flex-col">
+                            <div class="absolute top-2 right-2 bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Önerilen: Manuel Başlangıç</div>
+                            <div class="flex items-start">
+                                <input type="checkbox" name="kurgu" class="mt-1 w-5 h-5 accent-blue-600">
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-bold">Opsiyon 3: Görev Tamamlama</h4>
+                                    <p class="text-gray-600">Firmalar, "tüm lead'lerine 1 saatte dön" gibi net hedefleri tamamlayınca doğrudan ödül kazanırlar.</p>
+                                </div>
+                            </div>
+                             <div class="mt-4 pt-4 border-t border-gray-200 space-y-3 flex-grow flex flex-col justify-end">
+                                <div class="flex items-start"><span class="flex-shrink-0 text-lg mr-2">👍</span><div><span class="font-bold">Avantaj:</span> Anlaşılması ve ilk fazda manuel takiple başlatılması en kolay modeldir.</div></div>
+                                <div class="flex items-start"><span class="flex-shrink-0 text-lg mr-2">👎</span><div><span class="font-bold">Dezavantaj:</span> Sadece belirli hedefleri ödüllendirir, bütüncül panel kullanımını teşvik etmeyebilir.</div></div>
+                            </div>
+                        </label>
+                    </div>
+                </section>
+                <section class="bg-white p-8 rounded-xl shadow-md">
+                    <h2 class="text-3xl font-bold text-center mb-10">Ödül Kazandıracak Metrikler</h2>
+
+                    <div class="mb-16">
+                        <h4 class="text-xl font-bold text-center text-pink-600 mb-6">Manuel Başlangıç İçin Gerçekçi Opsiyonlar</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div>
+                                <h5 class="font-semibold text-lg mb-3 border-b pb-2">Aksiyon Bazlı Puanlama</h5>
+                                <div class="space-y-2">
+                                    <label class="checkbox-item"><input type="checkbox">Son 30 günde minimum 10 yorum ekleme</label>
+                                    <label class="checkbox-item"><input type="checkbox">%100 dönüş oranı</label>
+                                    <label class="checkbox-item"><input type="checkbox">1 saatin altında ortalama dönüş süresi</label>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-lg mb-3 border-b pb-2">Bonus/Streak Puanlamaları</h5>
+                                <div class="space-y-2">
+                                    <label class="checkbox-item"><input type="checkbox">30 gün boyunca aktif kampanya</label>
+                                    <label class="checkbox-item"><input type="checkbox">Her gün panele giriş yapmış olma</label>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-lg mb-3 border-b pb-2">Rekabetçi & Milestone Ödülleri</h5>
+                                <div class="space-y-2">
+                                    <label class="checkbox-item"><input type="checkbox">Ayın en fazla anlaşma işaretleyen firması</label>
+                                    <label class="checkbox-item"><input type="checkbox">Ayın en fazla yorum alan firması</label>
+                                    <label class="checkbox-item"><input type="checkbox">10. Anlaşma</label>
+                                    <label class="checkbox-item"><input type="checkbox">100. Görsel yükleme</label>
+                                    <label class="checkbox-item"><input type="checkbox">20. yorum</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                   
+                    <div>
+                        <h4 class="text-xl font-bold text-center text-blue-600 mb-6">Brainstorming Opsiyonları</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div>
+                                <h5 class="font-semibold text-lg mb-3 border-b pb-2">Aksiyon Bazlı Puanlama</h5>
+                                <h6 class="font-semibold text-md mt-4 mb-2 text-gray-600">Teklif Yönetimi</h6>
+                                <div class="space-y-2">
+                                  <label class="checkbox-item"><input type="checkbox">Teklife sonuç girme</label>
+                                   <label class="checkbox-item"><input type="checkbox">Anlaşma olarak işaretleme</label>
+                                    <label class="checkbox-item"><input type="checkbox">1 saatin altında ortalama dönüş süresi</label>
+                                    <label class="checkbox-item"><input type="checkbox">Tekliflere "arama" ile dönüş yapma</label>
+                                </div>
+                                <h6 class="font-semibold text-md mt-4 mb-2 text-gray-600">Profil Geliştirmeleri</h6>
+                                <div class="space-y-2">
+                                    <label class="checkbox-item"><input type="checkbox">Yorum ekleme</label>
+                                    <label class="checkbox-item"><input type="checkbox">Yeni yorum alma</label>
+                                    <label class="checkbox-item"><input type="checkbox">Yoruma cevap verme</label>
+                                    <label class="checkbox-item"><input type="checkbox">Fotoğraf ekleme</label>
+                                    <label class="checkbox-item"><input type="checkbox">Video ekleme</label>
+                                    <label class="checkbox-item"><input type="checkbox">Kampanya ekleme</label>
+                                    <label class="checkbox-item"><input type="checkbox">Menü güncelleme</label>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-lg mb-3 border-b pb-2">Bonus/Streak Puanlamaları</h5>
+                                <div class="space-y-2">
+                                    <label class="checkbox-item"><input type="checkbox">30 gün boyunca aktif kampanya</label>
+                                    <label class="checkbox-item"><input type="checkbox">60 gün boyunca aktif kampanya</label>
+                                    <label class="checkbox-item"><input type="checkbox">Haftalık hızlı dönüş badge'ini kaybetmeme</label>
+                                    <label class="checkbox-item"><input type="checkbox">Aylık hızlı dönüş badge'ini kaybetmeme</label>
+                                    <label class="checkbox-item"><input type="checkbox">Günlük ilk panel girişi</label>
+                                    <label class="checkbox-item"><input type="checkbox">Onboarding tamamlama</label>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-lg mb-3 border-b pb-2">Rekabetçi & Milestone Ödülleri</h5>
+                                <div class="space-y-2">
+                                    <label class="checkbox-item"><input type="checkbox">Haftanın en hızlı dönüş yapan firması</label>
+                                    <label class="checkbox-item"><input type="checkbox">Ayın en fazla yorum alan firması</label>
+                                    <label class="checkbox-item"><input type="checkbox">1. Anlaşma</label>
+                                    <label class="checkbox-item"><input type="checkbox">10. Anlaşma</label>
+                                    <label class="checkbox-item"><input type="checkbox">100. Görsel yükleme</label>
+                                    <label class="checkbox-item"><input type="checkbox">20. yorum</label>
+                                    <label class="checkbox-item"><input type="checkbox">Referans kazandırma</label>
+                                    <label class="checkbox-item"><input type="checkbox">App'i ilk kez indirme</label>
+                                    <label class="checkbox-item"><input type="checkbox">Testimonial (video) paylaşma</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+		<div>
+		<h2 class="text-xl font-bold text-center text-green-600 mb-6">Final Öneriler</h2>
+                    <div class="text-center mb-8 bg-gray-50 p-4 rounded-lg max-w-4xl mx-auto">
+                        <p class="text-gray-700">Her ay sabit olarak <span class="font-bold text-pink-600">%100 dönüş oranına</span> ve <span class="font-bold text-pink-600">yarım saatin altında dönüş süresine</span> sahip olan tüm firmalara <span class="font-bold">Starbucks Kahvesi</span> hediye edilir.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                        <div class="border p-4 rounded-lg bg-white text-center">
+                            <h3 class="font-bold text-lg">Ekim</h3>
+                            <p class="text-gray-600 mt-2">Sabit ödüle ek olarak, bu ay <span class="font-bold">en çok yorum alan 10 firmaya</span> Arçelik'ten 20.000 TL'lik hediye çeki.</p>
+                        </div>
+                        <div class="border p-4 rounded-lg bg-white text-center">
+                            <h3 class="font-bold text-lg">Kasım</h3>
+                            <p class="text-gray-600 mt-2">Sabit ödüle ek olarak, bu ay <span class="font-bold">en çok fotoğraf ekleyen 10 firmaya</span> Beko'dan 20.000 TL'lik hediye çeki.</p>
+                        </div>
+                        <div class="border p-4 rounded-lg bg-white text-center">
+                            <h3 class="font-bold text-lg">Aralık</h3>
+                            <p class="text-gray-600 mt-2">Sabit ödüle ek olarak, bu ay <span class="font-bold">Düğün.com'a özel fiyat veren ilk 10 firmaya</span> Teknosa'dan 20.000 TL'lik hediye çeki.</p>
+                        </div>
+                    </div>
+		</div>
+                </section>
+            </div>
+            
+             <div id="oduller-content" class="hidden">
+                <section class="mb-16 bg-white p-8 rounded-xl shadow-md">
+                    <h2 class="text-3xl font-bold text-center mb-10">Ödül Opsiyonları</h2>
+                    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <label class="p-6 rounded-lg border-2 has-[:checked]:border-green-500 has-[:checked]:bg-green-50 flex flex-col space-y-4">
+                            <div class="flex items-center w-full">
+                                <input type="checkbox" name="odul" class="w-6 h-6 accent-green-600">
+                                <img src="https://github.com/nesibekeles/Yarisma/blob/main/starbucks%20yatay.png?raw=true" alt="Starbucks Logo" class="h-10 ml-4">
+                            </div>
+                            <ul class="text-sm space-y-2 list-disc list-inside text-gray-700">
+                                <li><b>İndirim:</b> Adet ve tutardan bağımsız %10 sabit iskonto uygulanır.</li>
+                                <li><b>Dağıtım:</b> Dijital QR kodlar ZIP dosyası ile tek yetkiliye (Düğün.com'a) iletilir. Dağıtım operasyonu Düğün.com tarafından yapılır.</li>
+                                <li><b>Ödeme:</b> Ödemeler aylık olarak Havale/EFT ile yapılır.</li>
+                                <li><b>Kullanım:</b> 1 yıl geçerlidir. Parçalı kullanıma uygundur.</li>
+                                <li><b>Fatura:</b> KDV dahil fatura kesilir.</li>
+                            </ul>
+                        </label>
+                        <label class="p-6 rounded-lg border-2 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50 flex flex-col space-y-4">
+                            <div class="flex items-center w-full">
+                                <input type="checkbox" name="odul" class="w-6 h-6 accent-orange-600">
+                                <img src="https://github.com/nesibekeles/Yarisma/blob/main/biletix%20yatay.png?raw=true" alt="Biletix Logo" class="h-8 ml-4">
+                            </div>
+                            <ul class="text-sm space-y-2 list-disc list-inside text-gray-700">
+                                <li><b>İndirim:</b> Yıllık alım tutarına göre kademeli: 1M TL üzeri %1, 1.5M TL üzeri %1.5, 2M TL üzeri %2.</li>
+                                <li><b>Dağıtım:</b> Düğün.com'a şifreli Excel dosyası iletilir. 150 adet üzeri alımlarda Biletix, KVKK sözleşmesi ile dağıtımı yapabilir.</li>
+                                <li><b>Ödeme:</b> Siparişte havale ile, maksimum 15 gün vade.</li>
+                                <li><b>Kullanım:</b> 1 yıl geçerlidir. Parçalı kullanıma uygundur. Bir işlemde 1 kart kullanılır.</li>
+                                <li><b>Fatura:</b> Hediye kartı alımında dekont kesilir, bilet alımının kendisi fatura yerine geçer.</li>
+                            </ul>
+                        </label>
+                        <label class="p-6 rounded-lg border-2 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 flex flex-col space-y-4">
+                            <div class="flex items-center w-full">
+                                <input type="checkbox" name="odul" class="w-6 h-6 accent-blue-600">
+                                <img src="https://github.com/nesibekeles/Yarisma/blob/main/hepsiburada.png?raw=true" alt="Hepsiburada Logo" class="h-6 ml-4">
+                            </div>
+                            <ul class="text-sm space-y-2 list-disc list-inside text-gray-700">
+                                <li><b>İndirim:</b> 250.000 TL ve üzeri alımlarda özel iskonto uygulanır.</li>
+                                <li><b>Dağıtım:</b> Sadece dijital kod olarak Düğün.com'a iletilir, dağıtım Düğün.com tarafından yapılır.</li>
+                                <li><b>Ödeme:</b> Havale/EFT ile iş ortakları Larabay üzerinden yapılır.</li>
+                                <li><b>Kullanım:</b> 1 yıl geçerlidir. Parçalı kullanıma uygundur, kalan bakiye hesaba yeni çek olarak tanımlanır. Sadece Hepsiburada satıcılı ürünlerde geçerlidir.</li>
+                                <li><b>Fatura:</b> Larabay tarafından %0 KDV'li olarak kesilir.</li>
+                            </ul>
+                        </label>
+                    </div>
+                </section>
+                
+                 <section class="mb-16 bg-white p-8 rounded-xl shadow-md">
+                    <h2 class="text-3xl font-bold text-center mb-10">Maliyet Hesaplama</h2>
+                    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                        <div class="space-y-4 p-4 border rounded-lg">
+                            <h3 class="font-bold text-lg text-center">Küçük Ödül Hesaplayıcı</h3>
+                            <div>
+                                <label for="kucukOdulAdet" class="block text-sm font-medium text-gray-700">Aylık Ortalama Adet</label>
+                                <input type="number" id="kucukOdulAdet" value="50" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm" oninput="hesaplaMaliyet()">
+                            </div>
+                             <div>
+                                <label for="kucukOdulMaliyet" class="block text-sm font-medium text-gray-700">Adet Başına Maliyet (TL)</label>
+                                <input type="number" id="kucukOdulMaliyet" value="200" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm" oninput="hesaplaMaliyet()">
+                            </div>
+                            <div>
+                                <label for="kucukOdulIskonto" class="block text-sm font-medium text-gray-700">İskonto Oranı (%)</label>
+                                <input type="number" id="kucukOdulIskonto" value="10" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm" oninput="hesaplaMaliyet()">
+                            </div>
+                        </div>
+                         <div class="space-y-4 p-4 border rounded-lg">
+                             <h3 class="font-bold text-lg text-center">Büyük Ödül Hesaplayıcı</h3>
+                            <div>
+                                <label for="buyukOdulAdet" class="block text-sm font-medium text-gray-700">Aylık Ortalama Adet</label>
+                                <input type="number" id="buyukOdulAdet" value="10" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm" oninput="hesaplaMaliyet()">
+                            </div>
+                             <div>
+                                <label for="buyukOdulMaliyet" class="block text-sm font-medium text-gray-700">Adet Başına Maliyet (TL)</label>
+                                <input type="number" id="buyukOdulMaliyet" value="20000" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm" oninput="hesaplaMaliyet()">
+                            </div>
+                            <div>
+                                <label for="buyukOdulIskonto" class="block text-sm font-medium text-gray-700">İskonto Oranı (%)</label>
+                                <input type="number" id="buyukOdulIskonto" value="0" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm" oninput="hesaplaMaliyet()">
+                            </div>
+                        </div>
+                         <div class="bg-gray-50 rounded-lg p-8 text-center lg:mt-5">
+                            <h3 class="text-lg font-medium text-gray-500">Tahmini Toplam Yıllık Bütçe</h3>
+                            <p id="yillikMaliyet" class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-500 mt-2">2.508.000,00 TL</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="panel-dashboard-content" class="hidden">
+                 <div id="dashboard-view-wrapper" class="transition-all duration-500 ease-in-out max-w-7xl">
+                    <div class="mx-auto bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex justify-end items-center mb-4">
+                            <div class="inline-flex rounded-md shadow-sm" role="group">
+                                <button type="button" id="desktop-view-btn" onclick="switchDashboardView('desktop')" class="px-4 py-2 text-sm font-medium text-white bg-teal-600 border border-gray-200 rounded-l-lg hover:bg-teal-700">
+                                    Desktop Görünüm
+                                </button>
+                                <button type="button" id="mobile-view-btn" onclick="switchDashboardView('mobile')" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100">
+                                    Mobil Görünüm
+                                </button>
+                            </div>
+                        </div>
+
+                        <h1 class="text-3xl font-bold text-gray-800 mb-2">🏆 Yarışma & Ödüller</h1>
+                        <p class="text-gray-500 mb-6">Aylık performansınızı takip edin, görevleri tamamlayarak puan kazanın ve ödüllerin keyfini çıkarın!</p>
+
+                        <div class="border-b border-gray-200 mb-6">
+                            <nav class="flex space-x-6">
+                                <button id="dashboard-tab-gorevlerim" class="tab-button active py-3 px-1 text-lg font-semibold border-b-2" onclick="switchDashboardTab('gorevlerim')">Görevlerim</button>
+                                <button id="dashboard-tab-odullerim" class="tab-button py-3 px-1 text-lg font-semibold border-b-2" onclick="switchDashboardTab('odullerim')">Ödüllerim</button>
+                            </nav>
+                        </div>
+
+                        <div id="dashboard-content-area">
+                            <div id="dashboard-gorevlerim-content">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                                    <div class="bg-gray-50 p-5 rounded-lg text-center"><p class="text-gray-500 text-sm">Toplam Puanınız</p><p class="text-3xl font-bold text-teal-600">1.250</p></div>
+                                    <div class="bg-gray-50 p-5 rounded-lg text-center"><p class="text-gray-500 text-sm">Sıralamanız (İl/Kategori)</p><p class="text-3xl font-bold text-teal-600">32.</p></div>
+                                    <div class="bg-gray-50 p-5 rounded-lg text-center"><p class="text-gray-500 text-sm">Sıradaki Ödüle Kalan</p><p class="text-3xl font-bold text-teal-600">750 Puan</p></div>
+                                </div>
+                                <div class="mb-8">
+                                    <h3 class="text-xl font-bold text-gray-700 mb-4">Bu Ayki Ödül Yol Haritanız</h3>
+                                    <div class="relative pt-1">
+                                        <div class="flex mb-2 items-center justify-between text-xs">
+                                            <div><span class="font-semibold text-teal-600">500p ☕️</span></div>
+                                            <div><span class="font-semibold text-teal-600">1000p 🎟️</span></div>
+                                            <div class="text-right"><span class="font-semibold text-gray-500">2000p 🎁</span></div>
+                                            <div class="text-right"><span class="font-semibold text-gray-500">3000p 💻</span></div>
+                                        </div>
+                                        <div class="overflow-hidden h-4 mb-4 text-xs flex rounded-full bg-gray-200">
+                                            <div style="width: 62.5%" class="progress-bar-fill shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center"></div>
+                                        </div>
+                                        <p class="text-center text-gray-600">Harika gidiyorsunuz! 1000 Puanlık Orta Segment ödülünü garantilediniz. Sıradaki hedef 2000 puan!</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-700 mb-4">Hızlı Puan Kazanılacak Görevler</h3>
+                                    <div class="space-y-3">
+                                        <div class="bg-white p-4 rounded-lg shadow-sm border flex items-center justify-between">
+                                            <div><p class="font-semibold text-gray-800">Anlaşma Bekleyen Çiftler</p><p class="text-sm text-gray-500">Sonuç girilmeyi bekleyen <span class="font-bold text-red-600">2</span> çiftiniz var. Her anlaşma için <span class="font-bold text-green-600">+20 Puan</span> kazanın!</p></div>
+                                            <button class="bg-teal-500 text-white font-bold py-2 px-4 rounded-md hover:bg-teal-600 transition-colors">İncele</button>
+                                        </div>
+                                        <div class="bg-white p-4 rounded-lg shadow-sm border flex items-center justify-between">
+                                            <div><p class="font-semibold text-gray-800">Profilinizi Güçlendirin</p><p class="text-sm text-gray-500">Galerinize bugün <span class="font-bold text-red-600">1 video</span> ekleyerek anında <span class="font-bold text-green-600">+10 Puan</span> kazanın!</p></div>
+                                            <button class="bg-teal-500 text-white font-bold py-2 px-4 rounded-md hover:bg-teal-600 transition-colors">Video Ekle</button>
+                                        </div>
+                                        <div class="bg-white p-4 rounded-lg shadow-sm border flex items-center justify-between">
+                                            <div><p class="font-semibold text-gray-800">Yorumları Cevaplayın</p><p class="text-sm text-gray-500">Çiftlerinizden gelen <span class="font-bold text-red-600">1 yoruma</span> henüz cevap vermediniz. Her cevap <span class="font-bold text-green-600">+5 Puan</span>!</p></div>
+                                            <button class="bg-teal-500 text-white font-bold py-2 px-4 rounded-md hover:bg-teal-600 transition-colors">Cevapla</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="dashboard-odullerim-content" class="hidden">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    <div class="reward-card h-64" onclick="this.classList.toggle('flipped')">
+                                        <div class="reward-card-inner">
+                                            <div class="reward-card-front bg-white rounded-lg shadow-md p-5 flex flex-col justify-between border-2 border-green-400">
+                                                <div class="flex justify-between items-start"><img src="https://i.imgur.com/GXBJPRy.png" alt="Starbucks" class="h-8"><span class="text-xs font-bold bg-green-100 text-green-800 py-1 px-2 rounded-full">KULLANILMADI</span></div>
+                                                <div><p class="text-2xl font-bold text-gray-800">Starbucks Hediye Çeki</p><p class="text-lg font-semibold text-gray-600">200 TL Değerinde</p></div>
+                                                <div class="text-center text-sm font-semibold text-teal-700">Kodu Görmek İçin Tıkla</div>
+                                            </div>
+                                            <div class="reward-card-back bg-gray-800 text-white rounded-lg shadow-md p-5 flex flex-col justify-center items-center">
+                                                <p class="text-sm mb-2">QR Kodu Kasiyere Okutun</p><div class="bg-white p-2 rounded-md"><img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=STB-DGN-12345" alt="QR Kod"></div><p class="mt-4 text-sm tracking-widest">Kod: <span class="font-mono bg-gray-700 p-1 rounded">STB-DGN-12345</span></p><p class="text-xs text-gray-400 mt-2">SKT: 31.12.2025</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="reward-card h-64 opacity-60">
+                                        <div class="reward-card-inner">
+                                            <div class="reward-card-front bg-gray-100 rounded-lg shadow-inner p-5 flex flex-col justify-between border-2 border-gray-300">
+                                                <div class="flex justify-between items-start"><img src="https://i.imgur.com/5V31v0O.png" alt="Trendyol" class="h-8 grayscale"><span class="text-xs font-bold bg-gray-200 text-gray-600 py-1 px-2 rounded-full">KULLANILDI</span></div>
+                                                <div><p class="text-2xl font-bold text-gray-500">Trendyol Hediye Çeki</p><p class="text-lg font-semibold text-gray-400">1000 TL Değerinde</p></div>
+                                                <div class="text-center text-sm font-semibold text-gray-500">Bu ödül kullanılmıştır.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="duyurular-content" class="hidden">
+                 <section class="mb-16 bg-white p-8 rounded-xl shadow-md">
+                    <h2 class="text-3xl font-bold text-center mb-10">Duyuru Planı</h2>
+                    <div class="relative pl-8 border-l-2 border-gray-300">
+                        <div class="mb-12 relative">
+                            <div class="absolute w-8 h-8 bg-pink-500 rounded-full -left-[18px] mt-1.5 border-4 border-white flex items-center justify-center text-white font-bold">1</div>
+                            <p class="absolute -left-28 text-right text-sm font-semibold text-pink-500 w-24">22 Eylül</p>
+                            <div class="bg-gray-50 p-4 rounded-lg shadow-sm ml-4">
+                                <h3 class="font-bold text-gray-800">Ön Duyuru</h3>
+                                <div class="flex space-x-4 text-xs text-gray-500 mt-1 mb-2">
+                                    <span><b>Hedef:</b> Tüm Firmalar</span>
+                                    <span><b>Kanal:</b> Mailing, Panel</span>
+                                </div>
+                                <p class="text-sm font-semibold text-gray-600 mb-2">Konu: Düğün.com'dan Firmalarımıza Özel Yepyeni Bir Dünya: Yarışma ve Ödüllerle Dolu Yeni Dönem Başlıyor!</p>
+                                <p class="text-sm text-gray-600">Çok yakında başlayacak olan yarışma ve ödül programının ilk ipuçları verilecek. Merak uyandırıcı bir dille, firmaların panellerini daha aktif kullanmalarının yakında onlara nasıl avantajlar getireceği anlatılacak.</p>
+                            </div>
+                        </div>
+                        <div class="mb-12 relative">
+                            <div class="absolute w-8 h-8 bg-pink-500 rounded-full -left-[18px] mt-1.5 border-4 border-white flex items-center justify-center text-white font-bold">2</div>
+                            <p class="absolute -left-28 text-right text-sm font-semibold text-pink-500 w-24">29 Eylül</p>
+                            <div class="bg-gray-50 p-4 rounded-lg shadow-sm ml-4">
+                                <h3 class="font-bold text-gray-800">Lansman</h3>
+                                 <div class="flex space-x-4 text-xs text-gray-500 mt-1 mb-2">
+                                    <span><b>Hedef:</b> Tüm Firmalar</span>
+                                    <span><b>Kanal:</b> Mailing, Panel, Sosyal Medya</span>
+                                </div>
+                                <p class="text-sm font-semibold text-gray-600 mb-2">Konu: Büyük Gün Geldi: Düğün.com Yarışma ve Ödül Programı Başladı!</p>
+                                <p class="text-sm text-gray-600">Yarışmanın tüm detayları, kuralları ve ilk ayın ödülleri (hem sabit hem de büyük ödül) açıklanacak. Firmalar, yarışmaya nasıl katılacakları ve panellerindeki yeni dashboard'u nasıl kullanacakları konusunda bilgilendirilecek.</p>
+                            </div>
+                        </div>
+                         <div class="mb-12 relative">
+                            <div class="absolute w-8 h-8 bg-blue-500 rounded-full -left-[18px] mt-1.5 border-4 border-white flex items-center justify-center text-white font-bold">3</div>
+                            <p class="absolute -left-28 text-right text-sm font-semibold text-blue-500 w-24">3 Kasım</p>
+                            <div class="bg-gray-50 p-4 rounded-lg shadow-sm ml-4">
+                                <h3 class="font-bold text-gray-800">İlk Kazananların İlanı</h3>
+                                 <div class="flex space-x-4 text-xs text-gray-500 mt-1 mb-2">
+                                    <span><b>Hedef:</b> Tüm Firmalar</span>
+                                    <span><b>Kanal:</b> Mailing, Sosyal Medya, Blog</span>
+                                </div>
+                                <p class="text-sm font-semibold text-gray-600 mb-2">Konu: Ekim Ayının Yıldızları Belli Oldu! İşte Kazanan Firmalarımız!</p>
+                                <p class="text-sm text-gray-600">Ekim ayının hem sabit ödülünü kazanan firma sayısı hem de büyük ödülü kazanan 10 firma ilan edilecek. Kazanan firmalarla yapılan kısa röportajlar veya tebrik mesajları paylaşılacak. Kasım ayı yarışmasının büyük ödülü duyurulacak.</p>
+                            </div>
+                        </div>
+                        <div class="mb-12 relative">
+                            <div class="absolute w-8 h-8 bg-blue-500 rounded-full -left-[18px] mt-1.5 border-4 border-white flex items-center justify-center text-white font-bold">4</div>
+                            <p class="absolute -left-28 text-right text-sm font-semibold text-blue-500 w-24">1 Aralık</p>
+                            <div class="bg-gray-50 p-4 rounded-lg shadow-sm ml-4">
+                                <h3 class="font-bold text-gray-800">Yeni Ay, Yeni Heyecan</h3>
+                                 <div class="flex space-x-4 text-xs text-gray-500 mt-1 mb-2">
+                                    <span><b>Hedef:</b> Tüm Firmalar</span>
+                                    <span><b>Kanal:</b> Mailing, Panel</span>
+                                </div>
+                                <p class="text-sm font-semibold text-gray-600 mb-2">Konu: Aralık Ayı Yarışması Başladı: Bu Ayın Büyük Ödülü Teknosa'dan!</p>
+                                <p class="text-sm text-gray-600">Kasım ayı kazananları tebrik edilecek ve Aralık ayı yarışmasının büyük ödülü ve kazanma koşulu (Düğün.com'a özel fiyat) detaylı olarak anlatılacak. Katılım teşvik edilecek.</p>
+                            </div>
+                        </div>
+                         <div class="relative">
+                            <div class="absolute w-8 h-8 bg-blue-500 rounded-full -left-[18px] mt-1.5 border-4 border-white flex items-center justify-center text-white font-bold">5</div>
+                            <p class="absolute -left-28 text-right text-sm font-semibold text-blue-500 w-24">5 Ocak</p>
+                            <div class="bg-gray-50 p-4 rounded-lg shadow-sm ml-4">
+                                <h3 class="font-bold text-gray-800">Yılın Son Kazananları</h3>
+                                 <div class="flex space-x-4 text-xs text-gray-500 mt-1 mb-2">
+                                    <span><b>Hedef:</b> Tüm Firmalar</span>
+                                    <span><b>Kanal:</b> Mailing, Sosyal Medya, Blog</span>
+                                </div>
+                                <p class="text-sm font-semibold text-gray-600 mb-2">Konu: 2025'e Harika Bir Veda: İşte Aralık Ayının Şampiyonları!</p>
+                                <p class="text-sm text-gray-600">Aralık ayının kazananları ilan edilecek. Yıl boyunca en çok ödül kazanan veya en yüksek puanı toplayan firmalara özel bir "2025'in Yıldızları" tebriği yapılacak. Yeni yılda yarışmanın devam edeceği bilgisi verilecek.</p>
+                            </div>
+                        </div>
+                    </div>
+                 </section>
+            </div>
+        </main>
+
+        <footer class="text-center p-8 mt-8 border-t border-gray-200">
+            <p class="text-gray-600">&copy; 2025 Düğün.com - Her Düğün Düğün.com'la Başlar.</p>
+        </footer>
+    </div>
+<script>
+    // Sayfa yüklendiğinde hesaplayıcıyı başlat
+    document.addEventListener("DOMContentLoaded", function() {
+        hesaplaMaliyet();
+    });
+
+    // Ana Sayfa Tab Fonksiyonu
+    function switchTab(tabName) {
+        const contents = ['genel-bakis-content', 'metrikler-content', 'oduller-content', 'panel-dashboard-content', 'duyurular-content'];
+        const tabs = ['tab-genel-bakis', 'tab-metrikler', 'tab-oduller', 'tab-panel-dashboard', 'tab-duyurular'];
+
+        contents.forEach(contentId => {
+            const contentElement = document.getElementById(contentId);
+            if (contentId.startsWith(tabName)) {
+                contentElement.classList.remove('hidden');
+            } else {
+                contentElement.classList.add('hidden');
+            }
+        });
+
+        tabs.forEach(tabId => {
+            const tabElement = document.getElementById(tabId);
+            if (tabId.startsWith(`tab-${tabName}`)) {
+                tabElement.classList.add('active');
+            } else {
+                tabElement.classList.remove('active');
+            }
+        });
+    }
+
+    // Dashboard İçindeki Tab Fonksiyonu
+    function switchDashboardTab(tabName) {
+        const gorevlerimContent = document.getElementById('dashboard-gorevlerim-content');
+        const odullerimContent = document.getElementById('dashboard-odullerim-content');
+        const gorevlerimTab = document.getElementById('dashboard-tab-gorevlerim');
+        const odullerimTab = document.getElementById('dashboard-tab-odullerim');
+
+        if (tabName === 'gorevlerim') {
+            gorevlerimContent.classList.remove('hidden');
+            odullerimContent.classList.add('hidden');
+            gorevlerimTab.classList.add('active');
+            odullerimTab.classList.remove('active');
+        } else {
+            gorevlerimContent.classList.add('hidden');
+            odullerimContent.classList.remove('hidden');
+            gorevlerimTab.classList.remove('active');
+            odullerimTab.classList.add('active');
+        }
+    }
+
+    // Dashboard Görünüm Değiştirme Fonksiyonu
+    function switchDashboardView(viewType) {
+        const wrapper = document.getElementById('dashboard-view-wrapper');
+        const desktopBtn = document.getElementById('desktop-view-btn');
+        const mobileBtn = document.getElementById('mobile-view-btn');
+        
+        const activeClasses = ['bg-teal-600', 'text-white', 'hover:bg-teal-700'];
+        const inactiveClasses = ['bg-white', 'text-gray-900', 'hover:bg-gray-100'];
+
+        if (viewType === 'mobile') {
+            wrapper.classList.remove('max-w-7xl');
+            wrapper.classList.add('max-w-sm', 'mx-auto');
+            
+            mobileBtn.classList.remove(...inactiveClasses);
+            mobileBtn.classList.add(...activeClasses);
+            desktopBtn.classList.remove(...activeClasses);
+            desktopBtn.classList.add(...inactiveClasses);
+        } else { // desktop
+            wrapper.classList.add('max-w-7xl');
+            wrapper.classList.remove('max-w-sm', 'mx-auto');
+            
+            desktopBtn.classList.remove(...inactiveClasses);
+            desktopBtn.classList.add(...activeClasses);
+            mobileBtn.classList.remove(...activeClasses);
+            mobileBtn.classList.add(...inactiveClasses);
+        }
+ }
+
+    // Maliyet Hesaplama Fonksiyonu
+    function hesaplaMaliyet() {
+        const kucukAdet = parseFloat(document.getElementById('kucukOdulAdet').value) || 0;
+        const kucukMaliyet = parseFloat(document.getElementById('kucukOdulMaliyet').value) || 0;
+        const kucukIskonto = parseFloat(document.getElementById('kucukOdulIskonto').value) || 0;
+        
+        const buyukAdet = parseFloat(document.getElementById('buyukOdulAdet').value) || 0;
+        const buyukMaliyet = parseFloat(document.getElementById('buyukOdulMaliyet').value) || 0;
+        const buyukIskonto = parseFloat(document.getElementById('buyukOdulIskonto').value) || 0;
+
+        const yillikKucukMaliyet = kucukAdet * kucukMaliyet * 12 * (1 - (kucukIskonto / 100));
+        const yillikBuyukMaliyet = buyukAdet * buyukMaliyet * 12 * (1 - (buyukIskonto / 100));
+        
+        const toplamYillikMaliyet = yillikKucukMaliyet + yillikBuyukMaliyet;
+
+        const formattedMaliyet = toplamYillikMaliyet.toLocaleString('tr-TR', {
+            style: 'currency',
+            currency: 'TRY',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        document.getElementById('yillikMaliyet').innerText = formattedMaliyet;
+    }
+</script>
+</body>
+</html>
+}
